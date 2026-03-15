@@ -1,16 +1,20 @@
+from tools.fisheries_tools import get_state_stats, get_species_info, get_scheme_info
 
-from tools.fisheries_tools import scheme_tool, state_tool, knowledge_tool
 
+def run_agent(question):
 
-def run_agent(query):
+    q = question.lower()
 
-    q = query.lower()
+    state = get_state_stats(q)
+    if state:
+        return state
 
-    if "scheme" in q or "pmmsy" in q:
-        return scheme_tool(query)
+    species = get_species_info(q)
+    if species:
+        return species
 
-    elif "production" in q or "state" in q:
-        return state_tool(query)
+    scheme = get_scheme_info(q)
+    if scheme:
+        return scheme
 
-    else:
-        return knowledge_tool(query)
+    return "Try searching for a state, fish species, or fisheries scheme."

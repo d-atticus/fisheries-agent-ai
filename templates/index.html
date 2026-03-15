@@ -28,6 +28,13 @@ padding:10px;
 margin-bottom:10px;
 }
 
+<select id="filter">
+<option value="all">All</option>
+<option value="state">State</option>
+<option value="species">Fish Species</option>
+<option value="scheme">Scheme</option>
+</select>
+
 input{
 width:70%;
 padding:10px;
@@ -71,8 +78,9 @@ headers:{
 "Content-Type":"application/json"
 },
 
-body:JSON.stringify({
-message:question
+body: JSON.stringify({
+message: question,
+filter: document.getElementById("filter").value
 })
 
 })

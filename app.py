@@ -13,14 +13,12 @@ templates = Jinja2Templates(directory="templates")
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-
 @app.post("/chat")
 def chat(data: dict):
 
-    question = data["message"]
+    question = data.get("message")
+    filter_type = data.get("filter", "all")
 
     answer = run_agent(question)
 
-    return {
-        "answer": answer
-    }
+    return {"answer": answer}
