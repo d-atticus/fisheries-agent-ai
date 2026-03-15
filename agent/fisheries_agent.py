@@ -1,20 +1,35 @@
-from tools.fisheries_tools import get_state_stats, get_species_info, get_scheme_info
+from tools.fisheries_tools import (
+    get_state_stats,
+    get_species_info,
+    get_scheme_info
+)
 
+def run_agent(message):
 
-def run_agent(question):
+    query = message.lower()
 
-    q = question.lower()
-
-    state = get_state_stats(q)
+    # try state tool
+    state = get_state_stats(query)
     if state:
         return state
 
-    species = get_species_info(q)
+    # try species tool
+    species = get_species_info(query)
     if species:
         return species
 
-    scheme = get_scheme_info(q)
+    # try scheme tool
+    scheme = get_scheme_info(query)
     if scheme:
         return scheme
 
-    return "Try searching for a state, fish species, or fisheries scheme."
+    return """
+🤖 Fisheries AI Assistant
+
+Try asking:
+
+• Bihar fisheries
+• Rohu fish
+• PMMSY scheme
+• Inland fisheries production
+"""
