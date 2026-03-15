@@ -1,20 +1,26 @@
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
-from fastapi import FastAPI
 from agent.fisheries_agent import run_agent
 
 app = FastAPI()
 
-@app.get("/")
-def home():
+templates = Jinja2Templates(directory="templates")
 
-    return {"message":"Fisheries AI Agent running"}
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.post("/chat")
-
-def chat(data:dict):
+def chat(data: dict):
 
     question = data["message"]
 
     answer = run_agent(question)
 
-    return {"response":answer}
+    return {
+        "answer": answer
+    }
